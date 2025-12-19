@@ -1,3 +1,15 @@
+<h1>First, get Tampermonkey. (Or a different userscript hoster)</h1><br>
+Links for each browser:<br>
+
+<a href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Google Chrome</a>,<br>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey">Mozilla Firefox</a>,<br>
+<a href="https://www.tampermonkey.net/?browser=safari">Safari</a>,<br>
+<a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Microsoft Edge</a>, or<br>
+<a href="https://addons.opera.com/extensions/details/tampermonkey-beta">Opera GX</a>.<br>
+
+Copy this script, and in Tampermonkey create a new script, and paste this script. Click Ctrl+S or smth else to save, and go to <a href="https://neal.fun/not-a-robot">I'm Not a Robot!</a><br>
+
+
 <h1>Levels I coded:</h1>
 
 <h2>Level 1:</h2>
