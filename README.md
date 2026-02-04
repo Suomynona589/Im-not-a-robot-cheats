@@ -34,11 +34,11 @@ It spins them until they're correct.<br>
 
 <h2>Level 6:</h2>
 <h3>XOXO (Tic Tac Toe)</h3>
-I tried, but it was too hard.<br>
+It refreshes than puts the X's in right places and wins!<br>
 
 <h2>Level 7:</h2>
 <h3>Word Search</h3>
-Chooses correct letters in word search, though sometimes doesn't do it correctly. I'm working on a fix.<br>
+Chooses correct letters in word search.<br>
 
 <h2><b>Level 8:</b></h2>
 <h3>License Plate</h3>
@@ -102,7 +102,7 @@ Clicks the ducks before they even move.<br>
 
 <h2>Level 23:</h2>
 <h3>Panorama</h3>
-Sorry, couldn't find a way to code.<br>
+Shows a video next to Panorama of how to do it.<br>
 
 <h2><b>Level 24:</b></h2>
 <h3>Eye Exam</h3>
