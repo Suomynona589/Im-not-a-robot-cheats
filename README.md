@@ -7,7 +7,9 @@ Links for each browser:<br>
 <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Microsoft Edge</a>, or<br>
 <a href="https://addons.opera.com/extensions/details/tampermonkey-beta">Opera GX</a>.<br>
 
-Copy this script, and in Tampermonkey create a new script, and paste this script. Click Ctrl+S or smth else to save, and go to <a href="https://neal.fun/not-a-robot">I'm Not a Robot!</a><br>
+<h1>Then, install it into tampermonkey.</h1>
+<a href="https://greasyfork.org/scripts/559535/code/I'm%20not%20a%20robot%20nealfun%20cheats.user.js" target="_blank">Install</a><br>
+<a href="https://update.greasyfork.org/scripts/559535/I'm%20not%20a%20robot%20nealfun%20cheats.user.js" target="_blank">Update</a><br>
 
 <h1>Levels I coded:</h1>
 
