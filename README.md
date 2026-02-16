@@ -7,7 +7,7 @@ Links for each browser:<br>
 <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Microsoft Edge</a>, or<br>
 <a href="https://addons.opera.com/extensions/details/tampermonkey-beta">Opera GX</a>.<br>
 
-<h1>Then, install it into tampermonkey.</h1>
+<h2>Then, install it into tampermonkey.</h1>
 <a href="https://greasyfork.org/scripts/559535/code/I'm%20not%20a%20robot%20nealfun%20cheats.user.js" target="_blank">Install</a><br>
 <a href="https://update.greasyfork.org/scripts/559535/I'm%20not%20a%20robot%20nealfun%20cheats.user.js" target="_blank">Update</a><br>
 
