@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         I'm not a robot neal.fun cheats
 // @namespace    http://tampermonkey.net/
-// @version      15.7
+// @version      16.1
 // @description  Codes auto-complete some levels
 // @author       Suomynona589
 // @match        https://neal.fun/not-a-robot/
@@ -14,8 +14,6 @@
     'use strict';
 
     //----Small helpers----
-
-const log = (...args) => console.log('[robot-cheats]', ...args);
 
 function waitFor(selector, timeout = 5000, interval = 50) {
   return new Promise(resolve => {
@@ -50,11 +48,9 @@ function simulateClick(el) {
 function clickAt(x, y) {
   const el = document.elementFromPoint(x, y);
   if (!el) {
-    log(`No element found at (${x}, ${y})`);
     return;
   }
   simulateClick(el);
-  log(`Clicked at (${x}, ${y}) on`, el);
 }
 
     //----Cheats----
@@ -148,7 +144,6 @@ async function runStopSignCheat() {
 
     async function runVegetableCheat() {
     const ready = await waitFor('.grid-item img.vegetable-image');
-    if (!ready) { log('vegetables: tiles not found'); return; }
 
     const veggies = ["tomato.webp","carrot.webp","onion.webp","corn.webp","potato.webp","eggplant.webp"];
 
@@ -167,8 +162,6 @@ async function runStopSignCheat() {
                 }
             }
         });
-
-        if (clicks > 0) log('vegetables: clicked', clicks, 'tiles');
 
         const allSelected = tiles.filter(el => {
             const img = el.querySelector('img.vegetable-image');
@@ -234,7 +227,7 @@ async function runIntersectionCheat() {
             if (isGoodRotation(el)) continue;
             for (let i = 0; i < 20; i++) {
                 simulateClick(el);
-                await sleep(100);
+                await sleep(30);
                 if (isGoodRotation(el)) break;
             }
         }
@@ -725,21 +718,15 @@ async function runStopBikeCheat() {
 //----License Plate Cheat----
 
 async function runLicensePlateCheat() {
-  log("runLicensePlateCheat: starting");
 
   const ready = await waitFor(".license-image");
-  if (!ready) { log("license: image not found"); return; }
 
   const img = document.querySelector(".license-image");
-  if (!img) { log("license: no image element"); return; }
   const src = img.getAttribute("src") || "";
   const m = src.match(/\/license\/([^/.]+)\.webp/i);
-  if (!m) { log("license: could not parse src", src); return; }
   const answer = m[1];
-  log("license: answer =", answer);
 
   const input = document.querySelector(".captcha-input-text");
-  if (!input) { log("license: captcha input not found"); return; }
 
   input.focus();
   input.value = "";
@@ -748,7 +735,6 @@ async function runLicensePlateCheat() {
     setTimeout(() => {
       input.value += ch;
       input.dispatchEvent(new Event("input", { bubbles: true }));
-      log("license: typed", ch);
     }, i * perCharDelay);
   });
 }
@@ -819,7 +805,6 @@ async function runMoleCheat() {
 async function runWaldoCheat() {
   const ready = await waitFor('.grid-item.grid-item-with-image');
   if (!ready) {
-    log('waldo: tiles not found');
     return;
   }
 
@@ -840,15 +825,12 @@ async function runWaldoCheat() {
       }
     }
   });
-
-  log('waldo: clicked', clicks, 'tiles');
 }
 
 //----Chihuahua Cheat----
 
 async function runChihuahuaCheat() {
     const ready = await waitFor('img.muffin-img');
-    if (!ready) { log('muffins: tiles not found'); return; }
 
     const chihuahuas = [
         "/not-a-robot/muffins/chihuahuas/1.webp",
@@ -878,8 +860,6 @@ async function runChihuahuaCheat() {
                 }
             }
         });
-
-        if (clicks > 0) log('muffins: clicked', clicks, 'tiles');
 
         const allSelected = tiles.filter(el => {
             const img = el.querySelector('img.muffin-img');
@@ -942,7 +922,6 @@ async function runChihuahuaCheat() {
 
 async function runWithoutCheat() {
     const ready = await waitFor('.grid-item.grid-item-with-image');
-    if (!ready) { log('without: tiles not found'); return; }
 
     const cycles = [
         [
@@ -983,8 +962,6 @@ async function runWithoutCheat() {
             }
         });
 
-        if (clicks > 0) log('without: clicked', clicks, 'tiles');
-
         const allSelected = tiles.filter(el => {
             const style = el.getAttribute('style') || "";
             return style.includes(expectedImage) &&
@@ -1016,20 +993,11 @@ async function runWithoutCheat() {
 
 async function runRecaptchaCheat() {
     const ready = await waitFor('.captcha-text');
-    if (!ready) { log('recaptcha: captcha text not found'); return; }
-
     const captchaTextEls = Array.from(document.querySelectorAll('.captcha-text'));
     const targetTextEl = captchaTextEls.find(el => el.textContent.trim() === "I'm not a robot");
-    if (!targetTextEl) { log('recaptcha: correct text not found'); return; }
-
     const captchaBox = targetTextEl.closest('.captcha-box');
-    if (!captchaBox) { log('recaptcha: captcha box not found'); return; }
-
     const checkbox = captchaBox.querySelector('.captcha-box-checkbox-input');
-    if (!checkbox) { log('recaptcha: checkbox not found in target box'); return; }
-
     simulateClick(checkbox);
-    log('recaptcha: clicked checkbox linked to "I\'m not a robot"');
 }
 
 //----Circle Cheat----
@@ -1063,12 +1031,9 @@ async function runCircleCheat() {
     drawDiv.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
 }
 
-runCircleCheat();
-
 //----Hydrants Cheat----
 
 function runHydrantCheat() {
-  log("runHydrantCheat: starting");
 
   const targets = [
     "/not-a-robot/sisyphus/hydrants/1.webp",
@@ -1114,7 +1079,6 @@ function runHydrantCheat() {
       if (src && targets.includes(src) && !clicked.has(src)) {
         simulateClick(item);
         clicked.add(src);
-        log("runHydrantCheat: clicked " + src);
       }
     });
   }
@@ -1122,7 +1086,6 @@ function runHydrantCheat() {
   const timer = setInterval(() => {
     clickVisibleTargets();
     if (clicked.size >= targets.length) {
-      log("runHydrantCheat: all 32 hydrants clicked");
       clearInterval(timer);
       observer.disconnect();
     }
@@ -1131,7 +1094,6 @@ function runHydrantCheat() {
   const observer = new MutationObserver(() => {
     clickVisibleTargets();
     if (clicked.size >= targets.length) {
-      log("runHydrantCheat: all 32 hydrants clicked");
       clearInterval(timer);
       observer.disconnect();
     }
@@ -1143,7 +1105,6 @@ function runHydrantCheat() {
 //----In Dark Cheat----
 
 async function runInDarkCheat() {
-  log("runInDarkCheat: starting");
 
   const ok1 = await waitFor(".captcha-words");
   const ok2 = await waitFor(".captcha-input-text");
@@ -1151,8 +1112,6 @@ async function runInDarkCheat() {
 
   let letters = [...document.querySelectorAll(".letter")].map(el => el.textContent.trim());
   let answer = letters.join("");
-
-  console.log("Answer is:", answer);
 
   let input = document.querySelector(".captcha-input-text");
   if (!input) return;
@@ -1162,7 +1121,6 @@ async function runInDarkCheat() {
     setTimeout(() => {
       input.value += ch;
       input.dispatchEvent(new Event("input", { bubbles: true }));
-      console.log("Typed:", ch);
     }, i * 75);
   });
 }
@@ -1171,7 +1129,6 @@ async function runInDarkCheat() {
 
 async function runWhatYouSeeCheat() {
     const ready = await waitFor('.captcha-input-text');
-    if (!ready) { log('what-you-see: input not found'); return; }
 
     const input = document.querySelector('.captcha-input-text');
 
@@ -1189,7 +1146,6 @@ async function runWhatYouSeeCheat() {
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 input.dispatchEvent(new Event('change', { bubbles: true }));
                 if (i === randomWord.length - 1) {
-                    log('what-you-see: filled with "' + randomWord + '"');
                 }
             }, i * 75);
         });
@@ -1199,7 +1155,6 @@ async function runWhatYouSeeCheat() {
 //----Minecraft Cheat----
 
 async function runMinecraftCheat() {
-    console.log("minecraft cheat: starting");
 
     function waitForSelector(selector, timeout = 8000) {
         return new Promise(resolve => {
@@ -1257,14 +1212,11 @@ async function runMinecraftCheat() {
     await new Promise(r => setTimeout(r, 200)); clickElement(grid1, 2);
     await new Promise(r => setTimeout(r, 200)); clickElement(grid2, 2);
     await new Promise(r => setTimeout(r, 300)); clickElement(output, 0);
-
-    console.log("minecraft cheat: done");
 }
 
 //----Catch Ducks Cheat----
 
 async function runCatchDucksCheat() {
-    console.log("duck cheat: starting");
 
     function waitForSelector(selector, timeout = 5000) {
         return new Promise(resolve => {
@@ -1287,14 +1239,13 @@ async function runCatchDucksCheat() {
     }
 
     ducks.forEach(el => simulateClick(el));
-    console.log("duck cheat: clicked", ducks.length, "ducks");
 
     const container = document.querySelector(".duck-container");
     if (container) {
         const msg = document.createElement("div");
         msg.textContent = "They got clicked by the way";
         msg.style.position = "absolute";
-        msg.style.left = (container.getBoundingClientRect().left - 250) + "px";
+        msg.style.left = (container.getBoundingClientRect().left - 275) + "px";
         msg.style.top = container.getBoundingClientRect().top + "px";
         msg.style.fontSize = "20px";
         msg.style.fontWeight = "bold";
@@ -1414,7 +1365,6 @@ setInterval(() => {
 //----Eye Exam Cheat----
 
 async function runEyeExamCheat() {
-  console.log("eye exam cheat: starting");
 
   let stage = 0;
 
@@ -1471,7 +1421,6 @@ async function runEyeExamCheat() {
         if (target) {
           simulateClick(target);
           clearInterval(interval);
-          console.log("eye exam cheat: finished");
         }
       }
     }
@@ -1522,8 +1471,6 @@ async function runNetworkCheat() {
 
 async function runSoulCheat() {
   const ready = await waitFor('.grid-item');
-  log("runSoulCheat: starting");
-
   const targets = [
     "/not-a-robot/soul/1.webp",
     "/not-a-robot/soul/3.webp",
@@ -1545,25 +1492,18 @@ async function runSoulCheat() {
       }
     }
   });
-
-  log("soul: clicked", clicks, "tiles");
 }
 
 //----Traffic Tree Cheat----
 
 async function runTrafficTreeCheat() {
-  log("runTrafficTreeCheat: starting");
 
   function getBackgroundPos(styleStr) {
     const m = styleStr.match(/background-position:\s*([0-9.]+%)\s+([0-9.]+%)/);
     return m ? `${m[1]} ${m[2]}` : null;
   }
-
   const exclude = new Set(["100% 0%", "0% 0%"]);
-
   const ready = await waitFor(".grid-item.grid-item-with-image");
-  if (!ready) { log("traffic-tree: tiles not found"); return; }
-
   const tiles = document.querySelectorAll(".grid-item.grid-item-with-image");
   let clicks = 0;
 
@@ -1574,10 +1514,7 @@ async function runTrafficTreeCheat() {
     if (!bp || exclude.has(bp)) return;
     simulateClick(tile);
     clicks++;
-    log("traffic-tree: clicked", bp);
   });
-
-  log("traffic-tree: total clicked =", clicks);
 }
 
 //----Beats Cheat----
@@ -1653,12 +1590,10 @@ async function runPart(partId, amount) {
 //----Brands Cheat----
 
 async function runBrandsCheat() {
-  log("runBrandsCheat: starting");
 
   const ready =
     (await waitFor('.brands')) &&
     (await waitFor('.brands img[src*="/not-a-robot/brands/"], .brands [style*="/not-a-robot/brands/"]'));
-  if (!ready) { log("brands: logos not found"); return; }
 
   const brandMap = {
     tesla: "T", adobe: "A", bing: "B", pinterest: "P", x: "X",
@@ -1686,12 +1621,10 @@ async function runBrandsCheat() {
     const key = extractBrand(el);
     if (key && brandMap[key]) {
       letters.push(brandMap[key]);
-      log("brands:", key, "->", brandMap[key]);
     }
   });
 
   const input = document.querySelector('.captcha-input-text');
-  if (!input) { log("brands: captcha input not found"); return; }
 
   input.focus();
   input.value = "";
@@ -1707,11 +1640,9 @@ async function runBrandsCheat() {
 //----Math Cheat----
 
 async function runMathCheat() {
-  log("runMathCheat: starting");
 
   const ready = await waitFor(".math-grid-item");
   if (!ready) {
-    log("math-cheat: tiles not found");
     return;
   }
 
@@ -1733,17 +1664,13 @@ async function runMathCheat() {
   for (const entry of tileData) {
     simulateClick(entry.tile);
     clicks++;
-    log("math-cheat: clicked", entry.value);
     await new Promise(r => setTimeout(r, 25));
   }
-
-  log("math-cheat: total clicked =", clicks);
 }
 
 //----Cup Shuffle Cheat----
 
 async function runCupCheat() {
-    log("runCupCheat: starting");
 
     const ok = await waitFor(".cup");
     if (!ok) return;
@@ -1763,20 +1690,220 @@ async function runCupCheat() {
         clicks++;
         if (clicks >= 3) {
             cup.removeEventListener("click", handler);
-            log("cup-cheat: done");
         }
     }
 
     cup.addEventListener("click", handler);
 }
 
+//----Candy Crush Cheat----
+
+async function runCandyCrushCheat() {
+
+    function ccClick(el) {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const x = r.left + r.width / 2;
+        const y = r.top + r.height / 2;
+
+        el.dispatchEvent(new PointerEvent('pointerdown', {
+            bubbles: true,
+            composed: true,
+            pointerId: 1,
+            buttons: 1,
+            isPrimary: true,
+            clientX: x,
+            clientY: y
+        }));
+
+        el.dispatchEvent(new PointerEvent('pointerup', {
+            bubbles: true,
+            composed: true,
+            pointerId: 1,
+            buttons: 0,
+            isPrimary: true,
+            clientX: x,
+            clientY: y
+        }));
+    }
+
+    const ready = await waitFor('.candy-cell');
+    if (!ready) return;
+    await ensureFullBoard();
+    let limit = 500;
+    while (!scoreReached() && limit-- > 0) {
+        const move = findBestMove();
+        if (!move) break;
+        const before = getMovesValue();
+        if (before == null) break;
+        const cells = Array.from(document.querySelectorAll('.candy-cell'));
+        const fromEl = cells[move.from];
+        const toEl = cells[move.to];
+        if (!fromEl || !toEl) break;
+        ccClick(fromEl);
+        ccClick(toEl);
+        await new Promise(r => setTimeout(r, 1));
+        const b1 = getBoard();
+        await new Promise(r => setTimeout(r, 75));
+        const b2 = getBoard();
+        if (JSON.stringify(b1) === JSON.stringify(b2)) continue;
+    }
+}
+
+async function ensureFullBoard() {
+    let tries = 0;
+    while (tries++ < 200) {
+        if (document.querySelectorAll('.candy-cell').length >= 64) return;
+        await new Promise(r => setTimeout(r, 50));
+    }
+}
+
+function getColorFromCell(cell) {
+    const svg = cell.querySelector('svg');
+    if (!svg) return null;
+    const list = Array.from(svg.classList);
+    const colors = ['green','yellow','orange','blue','purple','red'];
+    for (const c of colors) if (list.includes(c)) return c;
+    return null;
+}
+
+function getBoard() {
+    const cells = Array.from(document.querySelectorAll('.candy-cell'));
+    const board = new Array(64).fill(null);
+    for (let i = 0; i < 64 && i < cells.length; i++) board[i] = getColorFromCell(cells[i]);
+    return board;
+}
+
+function cloneBoard(b) {
+    return b.slice();
+}
+
+function findBestMove() {
+    const board = getBoard();
+    if (board.length < 64) return null;
+    let best = null;
+    for (let i = 0; i < 64; i++) {
+        const row = Math.floor(i / 8);
+        const col = i % 8;
+        const n = [];
+        if (col < 7) n.push(i + 1);
+        if (row < 7) n.push(i + 8);
+        if (col > 0) n.push(i - 1);
+        if (row > 0) n.push(i - 8);
+        for (const j of n) {
+            if (board[i] === board[j]) continue;
+            const score = evaluateSwap(board, i, j);
+            if (score <= 0) continue;
+            if (!best || score > best.score) best = { from: i, to: j, score };
+        }
+    }
+    return best;
+}
+
+function evaluateSwap(board, a, b) {
+    const temp = cloneBoard(board);
+    const t = temp[a];
+    temp[a] = temp[b];
+    temp[b] = t;
+    let total = 0;
+    let cur = temp;
+    for (let k = 0; k < 2; k++) {
+        const m = findMatches(cur);
+        if (m.size === 0) break;
+        total += m.size;
+        cur = applyClearAndDrop(cur, m);
+    }
+    return total;
+}
+
+function findMatches(board) {
+    const out = new Set();
+    for (let r = 0; r < 8; r++) {
+        let c0 = null;
+        let s = 0;
+        for (let c = 0; c <= 8; c++) {
+            const idx = r * 8 + c;
+            const col = c < 8 ? board[idx] : null;
+            if (col && col === c0) continue;
+            const e = c - 1;
+            if (c0 && e - s + 1 >= 3) for (let x = s; x <= e; x++) out.add(r * 8 + x);
+            c0 = col;
+            s = c;
+        }
+    }
+    for (let c = 0; c < 8; c++) {
+        let c0 = null;
+        let s = 0;
+        for (let r = 0; r <= 8; r++) {
+            const idx = r * 8 + c;
+            const col = r < 8 ? board[idx] : null;
+            if (col && col === c0) continue;
+            const e = r - 1;
+            if (c0 && e - s + 1 >= 3) for (let x = s; x <= e; x++) out.add(x * 8 + c);
+            c0 = col;
+            s = r;
+        }
+    }
+    return out;
+}
+
+function applyClearAndDrop(board, clear) {
+    const b = board.slice();
+    for (const i of clear) b[i] = null;
+    for (let c = 0; c < 8; c++) {
+        const stack = [];
+        for (let r = 7; r >= 0; r--) {
+            const idx = r * 8 + c;
+            if (b[idx] != null) stack.push(b[idx]);
+        }
+        let r = 7;
+        for (const color of stack) {
+            b[r * 8 + c] = color;
+            r--;
+        }
+        for (; r >= 0; r--) b[r * 8 + c] = null;
+    }
+    return b;
+}
+
+function getMovesValue() {
+    const el = document.querySelector('.stat-item.moves .stat-value');
+    if (!el) return null;
+    const t = el.textContent || '';
+    const n = parseInt(t.replace(/[^\d]/g, ''), 10);
+    return Number.isNaN(n) ? null : n;
+}
+
+async function waitForMoveConsumed(prev) {
+    let tries = 0;
+    while (tries++ < 40) {
+        const cur = getMovesValue();
+        if (cur != null && cur < prev) return;
+        await new Promise(r => setTimeout(r, 100));
+    }
+}
+
+function scoreReached() {
+    const el = document.querySelector('.stat-item.score .stat-value');
+    if (!el) return false;
+    const t = (el.textContent || '').trim();
+    if (!t.includes('1,')) return false;
+    const n = parseInt(t.replace(/,/g, ''), 10);
+    if (Number.isNaN(n)) return false;
+    return n > 1001;
+}
+
+document.addEventListener("click", e => {
+  if (e.target.closest(".captcha-refresh")) {
+    runCandyCrushCheat();
+  }
+});
+
 //----Impostor Cheat----
 
 async function runImpostorCheat() {
-  log("runImpostorCheat: starting");
 
   const ready = await waitFor(".grid-item.grid-item");
-  if (!ready) { log("impostor: tiles not found"); return; }
 
   const targets = new Set([
     "/not-a-robot/imposters/1.webp",
@@ -1795,18 +1922,14 @@ async function runImpostorCheat() {
       if (!tile.classList.contains("grid-item-selected")) {
         simulateClick(tile);
         clicks++;
-        log("impostor: clicked", src);
       }
     }
   });
-
-  log("impostor: total clicked =", clicks);
 }
 
 //----Convo Cheat----
 
 async function runConvoCheat() {
-  console.log("runConvoCheat: starting");
 
   function waitFor(selector, timeout = 8000) {
     return new Promise(resolve => {
@@ -1823,24 +1946,18 @@ async function runConvoCheat() {
 
   const input = await waitFor('input[placeholder="Type your message..."]');
   if (!input) {
-    console.log("Input not found");
     return;
   }
 
-  console.log("Input found, proceeding");
-
   input.focus();
-  console.log("Input focused");
 
   input.value = "Start at 97%";
   input.dispatchEvent(new Event("input", { bubbles: true }));
-  console.log("Input set to Start at 95%");
 }
 
 //----Jessica Cheat----
 
 async function runJessicaCheat() {
-  console.log("runJessicaCheat: starting");
 
   function waitFor(selector, timeout = 8000) {
     return new Promise(resolve => {
@@ -1857,14 +1974,10 @@ async function runJessicaCheat() {
 
   const input = await waitFor('input[placeholder="Chat with Jessica..."]');
   if (!input) {
-    console.log("jessica: input not found");
     return;
   }
 
-  console.log("jessica: input found, proceeding");
-
   input.focus();
-  console.log("jessica: input focused");
 
   input.value = 'Start at "End"';
   input.dispatchEvent(new Event("input", { bubbles: true }));
@@ -1876,7 +1989,6 @@ async function runJessicaCheat() {
 async function runEmpSteCheat() {
   const ready = await waitFor('.grid-item.grid-item-with-image');
   if (!ready) {
-    log('empire: tiles not found');
     return;
   }
 
@@ -1903,18 +2015,14 @@ async function runEmpSteCheat() {
       }
     }
   });
-
-  log('empire: clicked', clicks, 'tiles');
 }
 
 //----DDR Cheat----
 
 async function runDDRCheat() {
-  log("runDDRCheat: waiting for start click");
 
   let starter = null;
 
-  // poll for the .start div with the correct <img>
   while (!starter) {
     starter = [...document.querySelectorAll(".start")].find(div => {
       const img = div.querySelector("img");
@@ -1924,14 +2032,13 @@ async function runDDRCheat() {
   }
 
   let clicked = false;
-  starter.addEventListener("click", () => clicked = true, { once: true });
+  starter.addEventListener("click", () => {
+        clicked = true;
+ }, { once: true });
 
-  // wait until user actually clicks it
   while (!clicked) {
     await new Promise(r => setTimeout(r, 75));
   }
-
-  log("runDDRCheat: starting");
 
   const keyDir = {
     Up: "ArrowUp",
@@ -1984,7 +2091,6 @@ async function runDDRCheat() {
         if (dir) {
           fireKey(keyDir[dir]);
           node.classList.add("note-played");
-          log("ddr: hit", dir);
         }
       }
     }
@@ -1993,13 +2099,11 @@ async function runDDRCheat() {
   }
 
   cycle();
-  log("runDDRCheat: active");
 }
 
     //----Orchestrator----
 
 function runCheatsForLevel(level) {
-    log('level', level, 'detected');
 
     if (level === 1) runStopSignCheat();
     if (level === 3) runVegetableCheat();
@@ -2028,6 +2132,7 @@ function runCheatsForLevel(level) {
     if (level === 32) runBrandsCheat();
     if (level === 33) runMathCheat();
     if (level === 34) runCupCheat();
+    if (level === 35) runCandyCrushCheat();
     if (level === 36) runImpostorCheat();
     if (level === 41) runConvoCheat();
     if (level === 44) runJessicaCheat();
