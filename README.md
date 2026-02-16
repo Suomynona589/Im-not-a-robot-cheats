@@ -9,7 +9,6 @@ Links for each browser:<br>
 
 Copy this script, and in Tampermonkey create a new script, and paste this script. Click Ctrl+S or smth else to save, and go to <a href="https://neal.fun/not-a-robot">I'm Not a Robot!</a><br>
 
-
 <h1>Levels I coded:</h1>
 
 <h2>Level 1:</h2>
@@ -154,7 +153,7 @@ Fake highlights cup with ball, as in a script-made highlight.<br>
 
 <h2>Level 36:</h2>
 <h3>Not Candy Crush</h3>
-Nah.<br>
+Moves candies around, and eventually wins game.<br>
 
 <h2><b>Level 37:</b></h2>
 <h3>Imposters</h3>
@@ -173,7 +172,7 @@ Nope, too easy. Just click verify. You can literally just skip it.<br>
 Nah.<br>
 
 <h2>Level 41:</h2>
-<h3>Grieve</h3>
+<h3>Grave</h3>
 I tried. Too hard. Just Click and light the candle, click all the flowers and bring it to a bit below the grave, which you should click and use brush to clean off the moss.<br>
 
 <h2><b>Level 42:</b></h2>
@@ -203,4 +202,4 @@ Clicks the keys at the right time.<br>
 
 <h2>Level 48:</h2>
 <h3>The Inventor</h3>
-I wanted to give you a chance to watch it, but if you want to skip it, right-click it and click picture-in-picture and then you can skip to end.<br>
+I wanted to give you a chance to watch it, but if you want to skip it, right-click it and click show all controls, and then you can skip to end.<br>
